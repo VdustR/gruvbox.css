@@ -1,0 +1,45 @@
+{
+  "name": "gruvbox.css",
+  "version": "0.0.0-alpha.1",
+  "description": "gruvbox css variables",
+  "homepage": "https://github.com/VdustR/gruvbox.css",
+  "bugs": {
+    "url": "https://github.com/VdustR/gruvbox.css/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VdustR/gruvbox.css.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "VdustR",
+    "email": "vdustr@gmail.com",
+    "url": "https://vdustr.dev"
+  },
+  "type": "module",
+  "main": "gruvbox.css",
+  "files": [
+    "gruvbox-pcs.css",
+    "gruvbox-pcs.min.css",
+    "gruvbox.cjs",
+    "gruvbox.css",
+    "gruvbox.d.ts",
+    "gruvbox.js",
+    "gruvbox.min.css",
+    "gruvbox.min.js"
+  ],
+  "scripts": {
+    "build": "esmo build.ts"
+  },
+  "devDependencies": {
+    "@types/csso": "^5.0.0",
+    "@types/fs-extra": "^9.0.13",
+    "@types/lodash": "^4.14.181",
+    "@types/prettier": "^2.4.4",
+    "csso": "^5.0.3",
+    "esno": "^0.14.1",
+    "fs-extra": "^10.0.1",
+    "lodash": "^4.17.21",
+    "prettier": "^2.6.2"
+  }
+}
