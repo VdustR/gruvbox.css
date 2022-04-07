@@ -4,9 +4,9 @@
 
 [![NPM Publish](https://github.com/VdustR/gruvbox.css/actions/workflows/build.yml/badge.svg)](https://github.com/VdustR/gruvbox.css/actions/workflows/build.yml)
 
-![Palette Dark](https://cdn.jsdelivr.net/gh/vdustr/gruvbox.css/img/dark.png)
+![Palette Dark](https://vdustr.dev/asset-2022/04-07-gruvbox-css/dark.png)
 
-![Palette Light](https://cdn.jsdelivr.net/gh/vdustr/gruvbox.css/img/light.png)
+![Palette Light](https://vdustr.dev/asset-2022/04-07-gruvbox-css/light.png)
 
 ## Demo
 
