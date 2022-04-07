@@ -1,10 +1,11 @@
 import { minify } from "csso";
 import fs from "fs-extra";
-import camelCase from "lodash/camelCase";
 import flow from "lodash/flow";
 import kebabCase from "lodash/kebabCase";
 import mapValues from "lodash/mapValues";
 import mergeWith from "lodash/mergeWith";
+import snakeCase from "lodash/snakeCase";
+import toUpper from "lodash/toUpper";
 import { format } from "prettier";
 
 const eol = "\n";
@@ -57,15 +58,11 @@ const palette = {
 
 const prefix = "--gruvbox";
 const darkClass = ".gruvbox-dark";
-const softClass = ".gruvbox-soft";
-const hardClass = ".gruvbox-hard";
 
 const lightMode = {
-  bg0: {
-    "": "light0",
-    soft: "light0_soft",
-    hard: "light0_hard",
-  },
+  bg0: "light0",
+  bg0s: "light0_soft",
+  bg0h: "light0_hard",
   bg1: "light1",
   bg2: "light2",
   bg3: "light3",
@@ -137,22 +134,6 @@ function modeToCssMap(
       );
       return;
     }
-    Object.entries(value).forEach(([contrast, value]) => {
-      const contrastClass =
-        contrast === "" ? "" : contrast === "hard" ? hardClass : softClass;
-      const query = !contrastClass
-        ? modeName === "light"
-          ? `:root`
-          : darkClass
-        : modeName === "light"
-        ? contrastClass
-        : `${darkClass}${contrastClass}, ${darkClass} ${contrastClass}`;
-      push(
-        query,
-        `${prefix}-mode-${formatName(key)}`,
-        `var(${prefix}-abs-${formatName(value)})`
-      );
-    });
   });
   return cssMap;
 }
@@ -223,7 +204,10 @@ fs.writeFileSync("./gruvbox-pcs.min.css", minify(pcsContent).css, "utf8");
 const cssVariables: Record<string, string> = flow(
   () => Object.keys(cssMap[":root"]),
   (keys) =>
-    keys.map((key) => [camelCase(key.substring(prefix.length + 1)), key]),
+    keys.map((key) => [
+      toUpper(snakeCase(key.substring(prefix.length + 1))),
+      key,
+    ]),
   (entries) => Object.fromEntries(entries)
 )();
 
@@ -250,7 +234,7 @@ fs.writeFileSync(
 );
 fs.writeFileSync(
   "gruvbox.min.js",
-  "var gruvbox={" +
+  "var GRUVBOX={" +
     Object.entries(cssVariables)
       .map(([key, value]) => `${key}:"${value}"`)
       .join(",") +
