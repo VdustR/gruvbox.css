@@ -132,20 +132,24 @@ function modeToCssMap(
     if (typeof value === "string") {
       push(
         modeName === "light" ? `:root` : darkClass,
-        `${prefix}-mode-${key}`,
+        `${prefix}-mode-${formatName(key)}`,
         `var(${prefix}-abs-${formatName(value)})`
       );
       return;
     }
     Object.entries(value).forEach(([contrast, value]) => {
-      const contrastClass = contrast === "hard" ? hardClass : softClass;
-      const query =
-        modeName === "light"
-          ? contrastClass
-          : `${darkClass}${contrastClass}, ${darkClass} ${contrastClass}`;
+      const contrastClass =
+        contrast === "" ? "" : contrast === "hard" ? hardClass : softClass;
+      const query = !contrastClass
+        ? modeName === "light"
+          ? `:root`
+          : darkClass
+        : modeName === "light"
+        ? contrastClass
+        : `${darkClass}${contrastClass}, ${darkClass} ${contrastClass}`;
       push(
         query,
-        `${prefix}-mode-${key}`,
+        `${prefix}-mode-${formatName(key)}`,
         `var(${prefix}-abs-${formatName(value)})`
       );
     });
