@@ -1,6 +1,13 @@
 {
   "name": "gruvbox.css",
   "description": "gruvbox css variables",
+  "keywords": [
+    "color",
+    "css",
+    "gruvbox",
+    "palette",
+    "theme"
+  ],
   "homepage": "https://github.com/VdustR/gruvbox.css",
   "bugs": {
     "url": "https://github.com/VdustR/gruvbox.css/issues"
