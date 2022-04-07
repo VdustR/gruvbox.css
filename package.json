@@ -18,6 +18,10 @@
   "type": "module",
   "main": "gruvbox.css",
   "files": [
+    "gruvbox-palette.cjs",
+    "gruvbox-palette.d.ts",
+    "gruvbox-palette.js",
+    "gruvbox-palette.min.js",
     "gruvbox-pcs.css",
     "gruvbox-pcs.min.css",
     "gruvbox.cjs",

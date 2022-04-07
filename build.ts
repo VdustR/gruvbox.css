@@ -2,6 +2,7 @@ import { minify } from "csso";
 import fs from "fs-extra";
 import flow from "lodash/flow";
 import kebabCase from "lodash/kebabCase";
+import mapKeys from "lodash/mapKeys";
 import mapValues from "lodash/mapValues";
 import mergeWith from "lodash/mergeWith";
 import snakeCase from "lodash/snakeCase";
@@ -10,9 +11,12 @@ import { format } from "prettier";
 
 const eol = "\n";
 
-function formatName(name: string): string {
+function formatCssName(name: string): string {
   return kebabCase(name);
 }
+
+const formatJsName = (name: string): string =>
+  flow(() => name, snakeCase, toUpper)();
 
 const palette = {
   dark0_hard: "#1d2021",
@@ -129,8 +133,8 @@ function modeToCssMap(
     if (typeof value === "string") {
       push(
         modeName === "light" ? `:root` : darkClass,
-        `${prefix}-mode-${formatName(key)}`,
-        `var(${prefix}-abs-${formatName(value)})`
+        `${prefix}-mode-${formatCssName(key)}`,
+        `var(${prefix}-abs-${formatCssName(value)})`
       );
       return;
     }
@@ -141,7 +145,7 @@ function modeToCssMap(
 const paletteCss: Properties = flow(
   () => Object.entries(palette),
   (entries) =>
-    entries.map(([key, hex]) => [`${prefix}-abs-${formatName(key)}`, hex]),
+    entries.map(([key, hex]) => [`${prefix}-abs-${formatCssName(key)}`, hex]),
   (entries) => Object.fromEntries(entries)
 )();
 
@@ -204,10 +208,7 @@ fs.writeFileSync("./gruvbox-pcs.min.css", minify(pcsContent).css, "utf8");
 const cssVariables: Record<string, string> = flow(
   () => Object.keys(cssMap[":root"]),
   (keys) =>
-    keys.map((key) => [
-      toUpper(snakeCase(key.substring(prefix.length + 1))),
-      key,
-    ]),
+    keys.map((key) => [formatJsName(key.substring(prefix.length + 1)), key]),
   (entries) => Object.fromEntries(entries)
 )();
 
@@ -236,6 +237,39 @@ fs.writeFileSync(
   "gruvbox.min.js",
   "var GRUVBOX={" +
     Object.entries(cssVariables)
+      .map(([key, value]) => `${key}:"${value}"`)
+      .join(",") +
+    "}",
+  "utf8"
+);
+
+const jsPalette = mapKeys(palette, (_value, key) => formatJsName(key));
+
+fs.writeFileSync(
+  "gruvbox-palette.js",
+  Object.entries(jsPalette)
+    .map(([key, value]) => `export const ${key} = "${value}";`)
+    .join(eol),
+  "utf8"
+);
+fs.writeFileSync(
+  "gruvbox-palette.cjs",
+  Object.entries(jsPalette)
+    .map(([key, value]) => `exports.${key} = "${value}";`)
+    .join(eol),
+  "utf8"
+);
+fs.writeFileSync(
+  "gruvbox-palette.d.ts",
+  Object.keys(jsPalette)
+    .map((key) => `export const ${key}: string;`)
+    .join(eol),
+  "utf8"
+);
+fs.writeFileSync(
+  "gruvbox-palette.min.js",
+  "var GRUVBOX_PALETTE={" +
+    Object.entries(jsPalette)
       .map(([key, value]) => `${key}:"${value}"`)
       .join(",") +
     "}",
