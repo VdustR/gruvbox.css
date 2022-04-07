@@ -90,13 +90,13 @@ const lightMode = {
 type Mode = typeof lightMode;
 
 function darkenValue(value: string): string {
-  return value.replace(/(light|dark|bright)/, (match) => {
+  return value.replace(/(light|dark|faded)/, (match) => {
     if (match === "light") {
       return "dark";
     } else if (match === "dark") {
       return "light";
-    } else if (match === "bright") {
-      return "faded";
+    } else if (match === "faded") {
+      return "bright";
     }
     return match;
   });
