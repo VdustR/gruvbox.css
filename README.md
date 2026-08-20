@@ -4,9 +4,9 @@
 
 [![NPM Publish](https://github.com/VdustR/gruvbox.css/actions/workflows/build.yml/badge.svg)](https://github.com/VdustR/gruvbox.css/actions/workflows/build.yml)
 
-![Palette Dark](https://vdustr.dev/asset-2022/04-07-gruvbox-css/dark.png)
+![Palette Dark](https://vdustr.github.io/asset-2022/04-07-gruvbox-css/dark.png)
 
-![Palette Light](https://vdustr.dev/asset-2022/04-07-gruvbox-css/light.png)
+![Palette Light](https://vdustr.github.io/asset-2022/04-07-gruvbox-css/light.png)
 
 ## Demo
 
@@ -133,4 +133,4 @@ To check all constants [here](https://cdn.jsdelivr.net/npm/gruvbox.css/gruvbox-p
 
 ## License
 
-[MIT](https://github.com/VdustR/gruvbox.css/blob/main/LICENSE) © [ViPro](https://vdustr.dev).
+[MIT](https://github.com/VdustR/gruvbox.css/blob/main/LICENSE) © [ViPro](https://vdustr.github.io).
